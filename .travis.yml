@@ -1,0 +1,12 @@
+services:
+  - docker
+
+before_install:
+  - docker build -f Dockerfile.dev -t redux-app-dev .
+  - docker build -t redux-app-prod .
+
+script:
+  - docker run --name dev -p 3000:3000 -d redux-app-dev
+  - docker stop dev
+  - docker run --name prod -p 80:80 -d redux-app-prod
+  - docker stop prod
